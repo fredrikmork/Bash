@@ -1,0 +1,5 @@
+#!/bin/bash
+
+filnavn=$1
+
+ls 

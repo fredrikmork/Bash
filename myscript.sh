@@ -1,0 +1,202 @@
+#! /bin/bash
+#shebang #!
+
+# bash - bourne again shell
+
+#ECHO COMMAND
+#echo Hello World!
+
+# VARIABLES
+# Uppercase by convention
+# Letters, numbers, underscores
+#NAME="Fredda"
+#echo "My name is $NAME"
+#echo "My name is ${NAME}"
+
+# USER INPUT
+read -p "Enter your name: " NAME
+echo "Hello $NAME, nice to meet you!"
+
+#SIMPLE IF STATEMENT
+if [ "$NAME" == "Fredda" ]
+then
+	echo "Your name is Brad"
+elif [ "$NAME" == "Jack" ]
+then
+	echo "Your name is Jack" 
+else
+	echo "Your name is NOT Brad"
+fi
+
+#COMPARISON
+NUM1=31
+NUM2=5
+if [ "$NUM1" -gt "$NUM2" ]
+then 
+	echo "$NUM1 is greater than $NUM2"
+else
+	echo "$NUM1 is less than $NUM2"
+fi
+#####
+# val1 -eq val2 Returns true if the values are equal
+# val1 -ne val2 Returns true if the values are not equal
+# val1 -gt val2 Returns true if val1 is greater than val2
+# val1 -ge val2 Returns true if val1 is greater than or equal to val2
+# val1 -lt val2 Returns true if val1 is less than val2
+# val1 -le val2 Returns true if val1 is less than or equal to val2
+#####
+
+
+# FILE CONDITIONS
+
+FILE="test.txt"
+if [ -f "$FILE" ]
+then
+	echo "$FILE is a file"
+else
+	echo "$FILE is NOT a file"
+fi
+
+#####
+# -d file	True if the file is a directory
+# -e file	True if the file exists (note that this is not particurlarly portable, thus -f is generally used)
+# -f file	True if the provided string is a file
+# -g file	True if the group id is set on a file
+# -r file	True if the file is readable
+# -s file	True if the file has non-zero size
+# -u		True if the user id is set on a file
+# -w		True if the file is writable
+# -x		True if the file is executable
+# -z		True if the length of string is zero
+# -n		True if the length of string is non-zero
+#####
+
+
+#CASE STATEMENT
+read -p "Are you 21 or over? Y/N" ANSWER
+case "$ANSWER" in
+	[yY] | [yY][eE][sS])
+		echo "You can have a beer :)"
+		;;
+	[nN] | [nN][oO])
+		echo "Sorry, no drinking"
+		;;
+	*)
+		echo "Please enter y/yes or n/no"
+		;;
+esac
+
+
+#SIMPLE FOR LOOP
+
+NAMES="Fredda Arne Rota"
+for NAME in $NAMES
+	do 
+		echo "Hello $NAME"
+done
+
+# FOR LOOP TO RENAME FILES
+#FILES=$(ls *.txt)
+#NEW="new"
+#for FILE in $FILES
+#	do 
+#		echo "Renaming $FILE to new-$FILE"
+#		mv $FILE $NEW-$FILE
+#done 
+
+
+# WHILE LOOP - READ THROUGH A FILE LINE BY LINE
+LINE=1
+while read -r CURRENT_LINE
+	do
+		echo "$LINE: $CURRENT_LINE"
+		((LINE++)) #iterer med 1
+done < "./new-1.txt"
+
+# FUNCTION
+function sayHello() {
+	echo "Hello World!"
+}
+
+sayHello
+
+# FUNCTION WITH PARAMS
+function greet() {
+	echo "Hello, I am $1 and I am $2"
+}
+greet "Fredda" "21"
+
+#CREATE FOLDER AND WRITE TO A FILE
+mkdir hello 
+touch "hello/world.txt"
+echo "fyyfaen" >> "hello/world.txt"
+echo "Created hello/world.txt"
+
+# WILDCARD
+
+####
+# ?	the match for a single character
+# *	match all charachters
+# []	let you match a range of values
+# {}	let you define a list of values
+# (())	numerical calculation
+# [[]]	string check
+####
+
+# ESCAPE
+
+####
+# \	preserves literal value of the next character that follows, with the exception of newline
+# "	
+# ""	the literal value of all characters enclosed is preserved, except for dollar sign, the backticks,backward single quotes: ``. and the backslash. 
+# ''	preserves the literal value of each character enclosed within the quotes
+####
+
+# REDIRECT OF STREAMS
+
+####
+# < >	redirect
+# >>	add
+# |	pipe
+####
+
+# PIPE CREATING POWERFUL COMMANDS
+
+# command1 | command2 		--Filter the output of the first command, becomes the input in second command
+#cat new-1.txt | grep fyfaen 	--Returns the line where 'fyfaen' is
+#cat new-1.txt | sort 		--Returns all lines alphabetically sorted
+#cat new-1.txt | wc		--Returns lines	words	bytes
+#cat new-1.txt | tr f F		--Returns every small f to F in the file	
+#cat new-1.txt | sed 's/en/En'	--Return E instead of e in the file
+
+###
+# grep	scan a document with a search string
+# sed	change the chosen string with another
+# tr	translate a character to another
+# wc	returns lines, words & bytes of a file
+# sort	sort the lines alphabetic -r reverse, -n numerically, -f case insensitivive sorting
+###
+
+
+# ACCESS RIGHTS
+
+#####
+# rwxrwxrwx	Permission to read, write & execute for owner, group & others
+# rwxr-xr--	owner has r,w,x. group has r,x. others has only r
+#chmod u+x myscript.sh	give execute permission (+x) to the user(u)(who is the owner)
+#chmod go-rwx passordliste	remove r,w,x (-rwx from the group(g) and other users(o)
+#chmod a=r reise	give all(a, same as ugo)  read access (=r) same as a+r
+#chmod go= fil		removes all rights from g & o
+#chmod u=rwx, g=rx, o= aa.sh	u gets r,w,x. g gets r,x. removes all from o
+
+#000 -> 000 000 000 -> --- --- ---
+#323 -> 011 010 011 -> -wx --x -wx
+#777 -> 111 111 111 -> rwx rwx rwx
+
+
+# STRUCTURE OF THE FILE SYSTEM
+
+#bin contains programs
+#lib contains library
+#home contains home directories
+
